@@ -1,0 +1,24 @@
+{
+  "agents": [
+    {
+      "name": "Agent One",
+      "email": "agent1@example.com",
+      "phone": "910000000001"
+    },
+    {
+      "name": "Agent Two",
+      "email": "agent2@example.com",
+      "phone": "910000000002"
+    },
+    {
+      "name": "Agent Three",
+      "email": "agent3@example.com",
+      "phone": "910000000003"
+    },
+    {
+      "name": "Agent Four",
+      "email": "agent4@example.com",
+      "phone": "910000000004"
+    }
+  ]
+}

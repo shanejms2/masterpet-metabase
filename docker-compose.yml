@@ -1,0 +1,45 @@
+services:
+  metabase:
+    image: metabase/metabase:v0.58.6
+    container_name: metabase
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3001:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      JAVA_OPTS: -Xmx768m
+      MB_SITE_URL: https://metabase.masterpet.co.in
+    mem_limit: 1024m
+    networks:
+      - default
+      - erpnext
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: metabase-postgres
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    mem_limit: 256m
+
+volumes:
+  postgres-data:
+
+networks:
+  erpnext:
+    external: true
+    name: frappe_docker_default
